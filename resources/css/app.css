@@ -7,13 +7,11 @@ html {
     scroll-behavior: smooth;
 }
 
-@layer base {
-    :root {
-        --color-primary: #09637E;
-        --color-secondary: #088395;
-        --color-accent: #7AB2B2;
-        --color-background: #EBF4F6;
-    }
+:root {
+    --color-primary: #09637E;
+    --color-secondary: #088395;
+    --color-accent: #7AB2B2;
+    --color-background: #EBF4F6;
 }
 
 @keyframes scaleIn {
