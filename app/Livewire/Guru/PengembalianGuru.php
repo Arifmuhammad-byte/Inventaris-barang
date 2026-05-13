@@ -57,16 +57,22 @@ public function updatingPage()
 {
     $guruId = session('guru_id');
 
-    $riwayat = Peminjaman::with('detailBarang.barang')
-        ->where('user_id', $guruId)
-        ->when($this->search, function ($query) {
-            $query->where('status', 'like', '%' . $this->search . '%')
-                ->orWhereHas('detailBarang.barang', function ($q) {
-                    $q->where('nama_barang', 'like', '%' . $this->search . '%');
-                });
-        })
-        ->orderBy('tanggal_pinjam', 'desc')
-        ->paginate(10)->withQueryString();
+   $riwayat = Peminjaman::with('detailBarang.barang')
+    ->where('user_id', $guruId)
+
+    // ❌ sembunyikan status ini
+    ->whereNotIn('status', ['Menunggu', 'Ditolak'])
+
+    ->when($this->search, function ($query) {
+        $query->where('status', 'like', '%' . $this->search . '%')
+            ->orWhereHas('detailBarang.barang', function ($q) {
+                $q->where('nama_barang', 'like', '%' . $this->search . '%');
+            });
+    })
+
+    ->orderBy('tanggal_pinjam', 'desc')
+    ->paginate(10)
+    ->withQueryString();
 
     return view('livewire.guru.pengembalianguru', [
         'riwayat' => $riwayat

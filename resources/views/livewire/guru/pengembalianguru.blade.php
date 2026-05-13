@@ -111,13 +111,15 @@
     <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 flex-1">
 
         <!-- CHECKBOX -->
-        @if($detail->status !== 'Dikembalikan')
-        <input type="checkbox"
-               wire:model="selectedDetails"
-               value="{{ $detail->id }}"
-               class="w-4 h-4 text-[#44a08d] rounded">
-        @endif
-
+       @if(
+    $detail->status !== 'Dikembalikan' &&
+    $peminjaman->status === 'Disetujui'
+)
+<input type="checkbox"
+       wire:model="selectedDetails"
+       value="{{ $detail->id }}"
+       class="w-4 h-4 text-[#44a08d] rounded">
+@endif
         <!-- DATA -->
         <div class="grid grid-cols-2 sm:flex gap-3 sm:gap-6 text-sm">
 
